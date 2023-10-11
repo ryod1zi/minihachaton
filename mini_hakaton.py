@@ -13,20 +13,17 @@ class Cars:
         self.mileage = mileage
         self.price = Decimal(str(price)).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)
 
-# Mixin для создания записей
 class CreateMixin:
     @classmethod
     def create(cls, **kwargs):
         instance = cls(**kwargs)
         return instance
 
-# Mixin для получения списка записей
 class ListingMixin:
     @classmethod
     def listing(cls, car_list):
         return car_list
 
-# Mixin для получения одной записи
 class RetrieveMixin:
     @classmethod
     def retrieve(cls, car_list, brand, model):
@@ -35,7 +32,6 @@ class RetrieveMixin:
                 return car
         return None
 
-# Mixin для обновления записей
 class UpdateMixin:
     @classmethod
     def update(cls, car_list, brand, model, **kwargs):
@@ -46,7 +42,6 @@ class UpdateMixin:
             return car
         return None
 
-# Mixin для удаления записей
 class DeleteMixin:
     @classmethod
     def delete(cls, car_list, brand, model):
@@ -56,7 +51,6 @@ class DeleteMixin:
             return True
         return False
 
-# Класс Cars с применением mixin-классов
 class CarsWithCRUD(CreateMixin, ListingMixin, RetrieveMixin, UpdateMixin, DeleteMixin, Cars):
     car_list = []
 
@@ -93,10 +87,8 @@ class CarsWithCRUD(CreateMixin, ListingMixin, RetrieveMixin, UpdateMixin, Delete
                 cls.car_list.append(cls.create(**car_data))
 
         except FileNotFoundError:
-            # Если файл не найден, просто создаем новый
             cls.car_list = []
 
-# Функции для взаимодействия с пользователем
 def print_menu():
     print("\n==== Меню ====")
     print("1. Добавить машину")
@@ -153,7 +145,6 @@ def list_cars():
     for index, car in enumerate(cars_list, start=1):
         print(f"{index}. {car.brand} {car.model}")
 
-    # Запрос пользователя о просмотре подробной информации о машине
     choice = get_user_input("Выберите номер машины для просмотра подробной информации (или Enter для возврата): ")
     if choice:
         try:
